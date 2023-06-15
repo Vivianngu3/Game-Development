@@ -144,6 +144,7 @@ function love.update(dt)
         else
             ball.dx = -math.random(140, 200)
         end
+
     elseif gameState == 'play' then
         -- detect ball collision with paddles, reversing dx if true and
         -- slightly increasing it, then altering the dy based on the position
@@ -161,6 +162,7 @@ function love.update(dt)
 
             sounds['paddle_hit']:play()
         end
+
         if ball:collides(player2) then
             ball.dx = -ball.dx * 1.03
             ball.x = player2.x - 4
@@ -207,6 +209,7 @@ function love.update(dt)
                 -- places the ball in the middle of the screen, no velocity
                 ball:reset()
             end
+
         end
 
         -- if we reach the right edge of the screen, go back to serve
@@ -228,7 +231,6 @@ function love.update(dt)
             end
         end
     end
-
     --
     -- paddles can move no matter what state we're in
     --
@@ -241,12 +243,12 @@ function love.update(dt)
         player1.dy = 0
     end
 
-    -- player 2
-    if love.keyboard.isDown('up') then
+    -- player 2 AI, tracks the y axis of the ball in order to move up or down
+    if ball.y < player2.y then
         player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
+    elseif ball.y > player2.y then 
         player2.dy = PADDLE_SPEED
-    else
+    else 
         player2.dy = 0
     end
 
